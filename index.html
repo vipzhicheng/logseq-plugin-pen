@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Drauu</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <style>
+      body,
+      html {
+        height: 100vh;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <div id="app" class="w-screen h-screen flex flex-col select-none">
+      <div class="flex justify-between bg-gray-200">
+        <div class="flex-1 p-2 font-bold text-2xl"></div>
+        <div
+        class="px-6 p-2 border-b border-gray-200 flex flex-wrap gap-0.5 "
+      >
+      <div class="font-bold text-2xl italic">Pen</div>
+      <div class="mx-4 opacity-25">/</div>
+        <button id="undo" aria-label="Undo" title="Undo">↩️</button>
+        <button id="redo" aria-label="Redo" title="Redo">↪️</button>
+        <button id="clear" aria-label="Clear" title="Clear">🗑</button>
+        <div class="mx-4 opacity-25">/</div>
+        <button class="active" id="m-stylus" aria-label="Stylus" title="Stylus">
+          ✍️
+        </button>
+        <button id="m-draw" aria-label="Draw" title="Draw">✏️</button>
+        <button id="m-line" aria-label="Line" title="Line">⁄</button>
+        <button id="m-arrow" aria-label="Arrow" title="Arrow">↗</button>
+        <button id="m-rect" aria-label="Rect" title="Rect">⃞</button>
+        <button id="m-ellipse" aria-label="Ellipse" title="Ellipse">⃝</button>
+        <button id="m-eraser" aria-label="Eraser" title="Eraser">🧹</button>
+        <div class="mx-4 opacity-25">/</div>
+        <button data-color="#000000" class="active">​⚫️​</button>
+        <button data-color="#ed153d" aria-label="Red" title="Red">​🔴​</button>
+        <button data-color="#ed9a26" aria-label="Orange" title="Orange">
+          ​🟠​​
+        </button>
+        <button data-color="#ede215" aria-label="Yellow" title="Yellow">
+          ​​🟡​​
+        </button>
+        <button data-color="#30bd20" aria-label="Green" title="Green">
+          ​🟢​​
+        </button>
+        <button data-color="#2656bf" aria-label="Blue" title="Blue">
+          ​​🔵​​
+        </button>
+        <button data-color="#c24aed" aria-label="Purple" title="Purple">
+          ​🟣​​
+        </button>
+        <button data-color="#bf6b26" aria-label="Brown" title="Brown">
+          ​​🟤​
+        </button>
+        <div class="mx-4 opacity-25">/</div>
+        <input
+          id="size"
+          type="range"
+          min="1"
+          max="10"
+          value="4"
+          step="0.5"
+          name="Size"
+          title="Size"
+        />
+        <div class="mx-4 opacity-25">/</div>
+        <button id="l-solid" class="active" aria-label="Solid" title="Solid">
+          —
+        </button>
+        <button id="l-dashed" aria-label="Dashed" title="Dashed">┅</button>
+        <button id="l-dotted" aria-label="Dotted" title="Dotted">⋯</button>
+        <div class="mx-4 opacity-25">/</div>
+        <button id="download" title="Download" class="cursor-pointer">📥</button>
+        <div class="mx-4 opacity-25">/</div>
+        <button id="close" title="Close" class="cursor-pointer">❌</button>
+      </div>
+      </div>
+
+      <svg
+        id="svg"
+        class="w-full flex-auto z-10"
+        style="touch-action: none"
+      ></svg>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
