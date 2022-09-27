@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Drauu</title>
+    <title>Pen</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
@@ -20,19 +20,23 @@
         background-color: #fff;
       }
 
+      #toolbar {
+        cursor: pointer;
+      }
+
     </style>
     <div id="app" class="w-screen h-screen flex flex-col select-none">
-      <div class="flex justify-between bg-gray-200">
+      <div id="toolbar" class="flex justify-between bg-gray-200">
         <div class="flex-1 p-2 font-bold text-2xl"></div>
         <div
         class="px-6 p-2 flex flex-wrap gap-0.5 "
       >
-      <div class="font-bold text-xl italic">Logseq Pen</div>
-      <div class="mt-1 mx-4 opacity-25">/</div>
+      <div class="ml-12 font-bold text-xl italic from-red-500    to-violet-500 bg-gradient-to-r text-transparent bg-clip-text">Logseq Pen</div>
+      <div class="mt-1 mx-2 opacity-25">/</div>
         <button id="undo" aria-label="Undo" title="Undo">↩️</button>
         <button id="redo" aria-label="Redo" title="Redo">↪️</button>
         <button id="clear" aria-label="Clear" title="Clear">🗑</button>
-        <div class="mt-1 mx-4 opacity-25">/</div>
+        <div class="mt-1 mx-2 opacity-25">/</div>
         <button class="active" id="m-stylus" aria-label="Stylus" title="Stylus">
           ✍️
         </button>
@@ -42,7 +46,7 @@
         <button id="m-rectangle" aria-label="Rect" title="Rect">⃞</button>
         <button id="m-ellipse" aria-label="Ellipse" title="Ellipse">⃝</button>
         <button id="m-eraseLine" aria-label="Eraser" title="Eraser">🧹</button>
-        <div class="mt-1 mx-4 opacity-25">/</div>
+        <div class="mt-1 mx-2 opacity-25">/</div>
         <button data-color="#000000" class="active">​⚫️​</button>
         <button data-color="#ed153d" aria-label="Red" title="Red">​🔴​</button>
         <button data-color="#ed9a26" aria-label="Orange" title="Orange">
@@ -63,11 +67,11 @@
         <button data-color="#bf6b26" aria-label="Brown" title="Brown">
           ​​🟤​
         </button>
-        <div class="mt-1 mx-4 opacity-25">/</div>
+        <div class="mt-1 mx-2 opacity-25">/</div>
         <button id="transparent" aria-label="Toggle Transparent Background" title="Toggle Transparent Background">
           ⬜
         </button>
-        <div class="mt-1 mx-4 opacity-25">/</div>
+        <div class="mt-1 mx-2 opacity-25">/</div>
         <input
           id="size"
           type="range"
@@ -78,16 +82,16 @@
           name="Size"
           title="Size"
         />
-        <div class="mt-1 mx-4 opacity-25">/</div>
+        <div class="mt-1 mx-2 opacity-25">/</div>
         <button id="l-solid" class="active" aria-label="Solid" title="Solid">
           —
         </button>
         <button id="l-dashed" aria-label="Dashed" title="Dashed">┅</button>
         <button id="l-dotted" aria-label="Dotted" title="Dotted">⋯</button>
-        <div class="mt-1 mx-4 opacity-25">/</div>
+        <div class="mt-1 mx-2 opacity-25">/</div>
         <button id="help" aria-label="Help" title="Help">❓</button>
-        <div class="mt-1 mx-4 opacity-25">/</div>
-        <button id="close" title="Close" class="cursor-pointer">❌</button>
+        <div class="mt-1 mx-2 opacity-25">/</div>
+        <button id="close" title="Close">❌</button>
       </div>
       </div>
 
@@ -115,19 +119,19 @@
                 </div>
                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                   <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">Key bindings</h3>
-                  <div class="mt-2">
-                    <p class="text-sm text-gray-500"><code>r</code>: rectangle</p>
-                    <p class="text-sm text-gray-500"><code>o</code>: circle</p>
-                    <p class="text-sm text-gray-500"><code>a</code>: arrow</p>
-                    <p class="text-sm text-gray-500"><code>l</code>: line</p>
-                    <p class="text-sm text-gray-500"><code>s</code>: stylus</p>
-                    <p class="text-sm text-gray-500"><code>d</code>: draw</p>
-                    <p class="text-sm text-gray-500"><code>c</code>: clear screen</p>
-                    <p class="text-sm text-gray-500"><code>=:</code> brush size increase</p>
-                    <p class="text-sm text-gray-500"><code>-:</code> brush size decrease</p>
-                    <p class="text-sm text-gray-500"><code>cmd+z</code>: undo</p>
-                    <p class="text-sm text-gray-500"><code>cmd+shift+z</code>: redo</p>
-                    <p class="text-sm text-gray-500"><code>q</code>: quit pen mode</p>
+                  <div class="mt-2 leading-loose">
+                    <p class="my-2 text-sm text-gray-500"><span class="inline-block font-bold font-mono px-2 mr-2 border border-gray-400">r</span>: Rectangle</p>
+                    <p class="my-2 text-sm text-gray-500"><span class="inline-block font-bold font-mono px-2 mr-2 border border-gray-400">o</span>: Circle</p>
+                    <p class="my-2 text-sm text-gray-500"><span class="inline-block font-bold font-mono px-2 mr-2 border border-gray-400">a</span>: Arrow line</p>
+                    <p class="my-2 text-sm text-gray-500"><span class="inline-block font-bold font-mono px-2 mr-2 border border-gray-400">l</span>: Normal line</p>
+                    <p class="my-2 text-sm text-gray-500"><span class="inline-block font-bold font-mono px-2 mr-2 border border-gray-400">s</span>: Stylus</p>
+                    <p class="my-2 text-sm text-gray-500"><span class="inline-block font-bold font-mono px-2 mr-2 border border-gray-400">d</span>: Draw</p>
+                    <p class="my-2 text-sm text-gray-500"><span class="inline-block font-bold font-mono px-2 mr-2 border border-gray-400">c</span>: Clear screen</p>
+                    <p class="my-2 text-sm text-gray-500"><span class="inline-block font-bold font-mono px-2 mr-2 border border-gray-400">=</span>: Increase brush size </p>
+                    <p class="my-2 text-sm text-gray-500"><span class="inline-block font-bold font-mono px-2 mr-2 border border-gray-400">-</span>: Decrease brush size </p>
+                    <p class="my-2 text-sm text-gray-500"><span class="inline-block font-bold font-mono px-2 mr-2 border border-gray-400">cmd+z</span>: Undo</p>
+                    <p class="my-2 text-sm text-gray-500"><span class="inline-block font-bold font-mono px-2 mr-2 border border-gray-400">cmd+shift+z</span>: Redo</p>
+                    <p class="my-2 text-sm text-gray-500"><span class="inline-block font-bold font-mono px-2 mr-2 border border-gray-400">q</span>: Quit pen mode</p>
                   </div>
                 </div>
               </div>

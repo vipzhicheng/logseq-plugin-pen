@@ -8,9 +8,8 @@ const drauu = createDrauu({
   el: "#svg",
   brush: {
     color: "#000",
-    size: 3,
+    size: 1,
   },
-  // acceptsInputTypes: ['pen'],
 });
 
 const sizeEl = document.getElementById("size")! as HTMLInputElement;

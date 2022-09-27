@@ -11,7 +11,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@vitejs/plugin-vue": "^3.1.0",
     "autoprefixer": "^10.4.12",
     "postcss": "^8.4.16",
     "postcss-nesting": "^10.2.0",
@@ -22,12 +21,11 @@
   },
   "dependencies": {
     "@logseq/libs": "^0.0.9",
-    "drauu": "^0.3.1",
-    "vue": "^3.2.39"
+    "drauu": "^0.3.1"
   },
   "logseq": {
     "id": "logseq-plugin-pen",
-    "title": "logseq-plugin-pen",
+    "title": "Logseq Pen",
     "icon": "./icon.png"
   }
 }
