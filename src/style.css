@@ -9,11 +9,7 @@ button {
     @apply bg-gray-100 rounded;
   }
 
-  &:focus {
-    @apply bg-gray-100;
-  }
-
   &:hover {
-    @apply bg-gray-100;
+    @apply bg-gray-100 rounded;
   }
 }

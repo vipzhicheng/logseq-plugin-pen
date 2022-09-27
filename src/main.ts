@@ -16,55 +16,33 @@ const drauu = createDrauu({
 const sizeEl = document.getElementById("size")! as HTMLInputElement;
 sizeEl.addEventListener("input", () => (drauu.brush.size = +sizeEl.value));
 
-window.addEventListener("keydown", (e) => {
-  if (e.code === "KeyZ" && (e.ctrlKey || e.metaKey)) {
-    if (e.shiftKey) drauu.redo();
-    else drauu.undo();
-    return;
-  }
-
-  if (e.shiftKey || e.ctrlKey || e.metaKey || e.altKey) return;
-
-  if (e.code === "KeyL") {
-    drauu.mode = "line";
-  } else if (e.code === "KeyD") {
-    drauu.mode = "draw";
-  } else if (e.code === "KeyS") {
-    drauu.mode = "stylus";
-  } else if (e.code === "KeyR") {
-    drauu.mode = "rectangle";
-  } else if (e.code === "KeyE") {
-    drauu.mode = "ellipse";
-  } else if (e.code === "KeyC") {
-    drauu.clear();
-  } else if (e.code === "Equal") {
-    drauu.brush.size = Math.min(10, drauu.brush.size + 0.5);
-    sizeEl.value = `${drauu.brush.size}`;
-  } else if (e.code === "Minus") {
-    drauu.brush.size = Math.max(1, drauu.brush.size - 0.5);
-    sizeEl.value = `${drauu.brush.size}`;
-  }
-});
-
 document.getElementById("undo")?.addEventListener("click", () => drauu.undo());
 document.getElementById("redo")?.addEventListener("click", () => drauu.redo());
 document
   .getElementById("clear")
   ?.addEventListener("click", () => drauu.clear());
-document.getElementById("download")?.addEventListener("click", () => {
-  drauu.el!.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-  const data = drauu.el!.outerHTML || "";
-  const blob = new Blob([data], { type: "image/svg+xml" });
-  const elem = window.document.createElement("a");
-  elem.href = window.URL.createObjectURL(blob);
-  elem.download = "pen.svg";
-  document.body.appendChild(elem);
-  elem.click();
-  document.body.removeChild(elem);
-});
 
 document.getElementById("close")?.addEventListener("click", () => {
   logseq.hideMainUI();
+});
+
+document.getElementById("transparent")?.addEventListener("click", () => {
+  const app = document.getElementById("app");
+  if (app?.classList.contains("background-white")) {
+    app.classList.remove("background-white");
+    document.getElementById("transparent")?.classList.remove("active");
+  } else {
+    app?.classList.add("background-white");
+    document.getElementById("transparent")?.classList.add("active");
+  }
+});
+
+document.getElementById("help")?.addEventListener("click", () => {
+  document.getElementById("help-modal")?.classList.remove("hidden");
+});
+
+document.getElementById("help-modal-close")?.addEventListener("click", () => {
+  document.getElementById("help-modal")?.classList.add("hidden");
 });
 
 const modes: { el: HTMLElement; brush: Partial<Brush> }[] = [
@@ -73,7 +51,7 @@ const modes: { el: HTMLElement; brush: Partial<Brush> }[] = [
     brush: { mode: "stylus", arrowEnd: false },
   },
   {
-    el: document.getElementById("m-eraser")!,
+    el: document.getElementById("m-eraseLine")!,
     brush: { mode: "eraseLine", arrowEnd: false },
   },
   {
@@ -89,7 +67,7 @@ const modes: { el: HTMLElement; brush: Partial<Brush> }[] = [
     brush: { mode: "line", arrowEnd: true },
   },
   {
-    el: document.getElementById("m-rect")!,
+    el: document.getElementById("m-rectangle")!,
     brush: { mode: "rectangle", arrowEnd: false },
   },
   {
@@ -129,6 +107,60 @@ colors.forEach((i) => {
   });
 });
 
+window.addEventListener("keydown", (e) => {
+  if (e.code === "KeyZ" && (e.ctrlKey || e.metaKey)) {
+    if (e.shiftKey) drauu.redo();
+    else drauu.undo();
+    return;
+  }
+
+  if (e.shiftKey || e.ctrlKey || e.metaKey || e.altKey) return;
+
+  if (e.code === "KeyL") {
+    drauu.mode = "line";
+    drauu.brush.arrowEnd = false;
+    modes.forEach(({ el }) => el.classList.remove("active"));
+    document.getElementById("m-line")?.classList.add("active");
+  } else if (e.code === "KeyD") {
+    drauu.mode = "draw";
+    modes.forEach(({ el }) => el.classList.remove("active"));
+    document.getElementById("m-draw")?.classList.add("active");
+  } else if (e.code === "KeyS") {
+    drauu.mode = "stylus";
+    modes.forEach(({ el }) => el.classList.remove("active"));
+    document.getElementById("m-stylus")?.classList.add("active");
+  } else if (e.code === "KeyR") {
+    drauu.mode = "rectangle";
+    modes.forEach(({ el }) => el.classList.remove("active"));
+    document.getElementById("m-rectangle")?.classList.add("active");
+  } else if (e.code === "KeyE") {
+    drauu.mode = "eraseLine";
+    modes.forEach(({ el }) => el.classList.remove("active"));
+    document.getElementById("m-eraseLine")?.classList.add("active");
+  } else if (e.code === "KeyO") {
+    drauu.mode = "ellipse";
+    modes.forEach(({ el }) => el.classList.remove("active"));
+    document.getElementById("m-ellipse")?.classList.add("active");
+  } else if (e.code === "KeyA") {
+    drauu.mode = "line";
+    drauu.brush.arrowEnd = true;
+    modes.forEach(({ el }) => el.classList.remove("active"));
+    document.getElementById("m-arrow")?.classList.add("active");
+  } else if (e.code === "KeyC") {
+    drauu.clear();
+  } else if (e.code === "Equal") {
+    drauu.brush.size = Math.min(10, drauu.brush.size + 0.5);
+    sizeEl.value = `${drauu.brush.size}`;
+    sizeEl.blur();
+  } else if (e.code === "Minus") {
+    drauu.brush.size = Math.max(1, drauu.brush.size - 0.5);
+    sizeEl.value = `${drauu.brush.size}`;
+    sizeEl.blur();
+  } else if (e.code === "KeyQ") {
+    logseq.hideMainUI();
+  }
+});
+
 function createModel() {
   return {
     openModal() {
@@ -137,30 +169,15 @@ function createModel() {
   };
 }
 
-async function triggerBlockModal() {
-  createModel().openModal();
-}
-
 const main = async () => {
   // createApp(App).mount('#app')
   logseq.provideModel(createModel());
-  logseq.Editor.registerSlashCommand("Test", triggerBlockModal);
-  logseq.Editor.registerBlockContextMenuItem("Test", triggerBlockModal);
-
-  logseq.App.registerUIItem("pagebar", {
-    key: "logseq-plugin-starter-vite-tailwindcss-pagebar",
-    template: `
-      <a data-on-click="openModal" class="button" title="Open modal" style="font-size: 18px">
-        P
-      </a>
-    `,
-  });
 
   logseq.App.registerUIItem("toolbar", {
-    key: "logseq-plugin-starter-vite-tailwindcss-toolbar",
+    key: "logseq-reset-sidebar",
     template: `
-      <a class="button" data-on-click="openModal" title="Open modal" style="font-size: 18px">
-        T
+      <a class="button" data-on-click="openModal" title="Pen">
+      <i class="ti ti-pencil" style=""></i>
       </a>
     `,
   });
