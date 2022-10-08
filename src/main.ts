@@ -168,7 +168,42 @@ function createModel() {
   };
 }
 
+const settingsVersion = "v1";
+export const defaultSettings = {
+  keyBindings: {
+    openPenMode: "",
+  },
+  settingsVersion,
+  disabled: false,
+};
+
+export type DefaultSettingsType = typeof defaultSettings;
+
+export const initSettings = () => {
+  let settings = logseq.settings;
+
+  const shouldUpdateSettings =
+    !settings || settings.settingsVersion != defaultSettings.settingsVersion;
+
+  if (shouldUpdateSettings) {
+    settings = defaultSettings;
+    logseq.updateSettings(settings);
+  }
+};
+
+export const getSettings = (
+  key: string | undefined,
+  defaultValue: any = undefined
+) => {
+  const settings = logseq.settings;
+  const merged = Object.assign(defaultSettings, settings);
+  return key ? (merged[key] ? merged[key] : defaultValue) : merged;
+};
+
 const main = async () => {
+  initSettings();
+  const keyBindings = getSettings("keyBindings");
+
   // createApp(App).mount('#app')
   logseq.provideModel(createModel());
 
@@ -180,6 +215,20 @@ const main = async () => {
       </a>
     `,
   });
+
+  logseq.App.registerCommandPalette(
+    {
+      key: "open-pen-mode",
+      label: "Open Pen Mode",
+      keybinding: keyBindings.openPenMode
+        ? {
+            mode: "global",
+            binding: keyBindings.openPenMode,
+          }
+        : undefined,
+    },
+    createModel().openModal
+  );
 };
 
 logseq.ready().then(main).catch(console.error);
