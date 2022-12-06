@@ -208,7 +208,7 @@ const main = async () => {
   logseq.provideModel(createModel());
 
   logseq.App.registerUIItem("toolbar", {
-    key: "logseq-reset-sidebar",
+    key: "logseq-pen",
     template: `
       <a class="button" data-on-click="openModal" title="Pen">
       <i class="ti ti-pencil" style=""></i>
